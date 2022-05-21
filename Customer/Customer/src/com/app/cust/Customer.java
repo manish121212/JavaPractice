@@ -1,15 +1,23 @@
 package com.app.cust;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Customer{
+public class Customer implements Comparable<Customer>,Serializable{
 
 String email;
 String password;
 double regAmount;
 CustType custType;
 Date regDate;
-Address address;
+ transient Address address;
+ private static final long SerialVersionUID = 10l;
+
+public Customer(String email,String password)
+{
+    this.email=email;
+    this.password=password;
+}
 
 public Customer(String email,String password,double regAmount,CustType custtype,Date rDate )
 {
@@ -22,6 +30,12 @@ public Customer(String email,String password,double regAmount,CustType custtype,
 public Customer(){}
 
 
+public void linkAddress(String city,String state,String country,String phoneNo,String type)
+{
+    this.address.cty=city;
+    this.address.state=state;
+    this.address.country=country;
+    this.address.type=type;
 }
 
     public String getEmail() {
@@ -71,4 +85,22 @@ public Customer(){}
     public void setAddress(Address address) {
         this.address = address;
     }
+    @Override
+    public int compareTo(Customer o) {
+        return this.email.compareTo(o.getEmail());
+    }
 
+    @Override
+    public String toString() {
+        return "{" +
+            " email='" + getEmail() + "'" +
+            ", password='" + getPassword() + "'" +
+            ", regAmount='" + getRegAmount() + "'" +
+            ", custType='" + getCustType() + "'" +
+            ", regDate='" + getRegDate() + "'" +
+            "}";
+    }
+
+
+
+}
